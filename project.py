@@ -1,15 +1,15 @@
 #Leitura do ficheiro, e transformação de dados em dicionários:
 #Tirar comentário de linhas de json
-import json;
+import json
 
 #AnguloZenital
 
-EjetLatitude = 32.61;
-EjetLongitude = -16.71;
-DeclinacaoSol = {};
+EjetLatitude = 32.61
+EjetLongitude = -16.71
+DeclinacaoSol = {}
 #AnguloZenital = EjetLatitude;
 
-token = open("AG1.txt","r");
+token = open("AG1.txt","r")
 anos = {}
 anos['Year'] = []
 meses = {}
@@ -30,63 +30,63 @@ v10 = {}
 v10['V10'] = []
 
 linestoken = token.readlines()
-tokens_column = 0;
+tokens_column = 0
 
 for x in linestoken:
     anos['Year'].append(x.split()[tokens_column])
 del anos['Year'][0]
 
-tokens_column = 1;
+tokens_column = 1
 for y in linestoken:
     meses['Months'].append(y.split()[tokens_column])
 del meses['Months'][0]
 
-tokens_column = 2;
+tokens_column = 2
 for y in linestoken:
     dias['Days'].append(y.split()[tokens_column])
 del dias['Days'][0]
 
-tokens_column = 3;
+tokens_column = 3
 for y in linestoken:
     hours['Hours'].append(y.split()[tokens_column])
 del hours['Hours'][0]
 
-tokens_column = 4;
+tokens_column = 4
 for y in linestoken:
     t2['T2'].append(y.split()[tokens_column])
 del t2['T2'][0]
 
-tokens_column = 5;
+tokens_column = 5
 for y in linestoken:
     swdown['SWDOWN'].append(y.split()[tokens_column])
 del swdown['SWDOWN'][0]
 
-tokens_column = 6;
+tokens_column = 6
 for y in linestoken:
     lwdown['LWDOWN'].append(y.split()[tokens_column])
 del lwdown['LWDOWN'][0]
 
-tokens_column = 7;
+tokens_column = 7
 for y in linestoken:
     u10['U10'].append(y.split()[tokens_column])
 del u10['U10'][0]
 
-tokens_column = 8;
+tokens_column = 8
 for y in linestoken:
     v10['V10'].append(y.split()[tokens_column])
 del v10['V10'][0]
-token.close();
+token.close()
 
-w = {}
-for i in hours:
-    AnguloHorario = (int(hours['Hours']) - 12) * (360/24) + EjetLongitude;
-    w.append(AnguloHorario);
+w = []
+list1 = hours["Hours"]
 
 
+for hour in list1:
+    AnguloHorario = (int(hour) - 12) * (360/24) + EjetLongitude
+    w.append(round(AnguloHorario,3))
 
 
-
-with open('AngulosHorarios',w) as jsonfile:
+with open('AngulosHorarios','w') as jsonfile:
     json.dump(w,jsonfile);
 # Caso seja necessário escrever nos ficheiros texto
 #
