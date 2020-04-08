@@ -1,6 +1,6 @@
 #Leitura do ficheiro, e transformação de dados em dicionários:
 #Tirar comentário de linhas de json
-#import json;
+import json;
 
 #AnguloZenital
 
@@ -77,14 +77,17 @@ for y in linestoken:
 del v10['V10'][0]
 token.close();
 
-
-for i in dias:
-    
-
-
-
+w = {}
+for i in hours:
+    AnguloHorario = (int(hours['Hours']) - 12) * (360/24) + EjetLongitude;
+    w.append(AnguloHorario);
 
 
+
+
+
+with open('AngulosHorarios',w) as jsonfile:
+    json.dump(w,jsonfile);
 # Caso seja necessário escrever nos ficheiros texto
 #
 #with open('years.txt','w') as jsonfile:
