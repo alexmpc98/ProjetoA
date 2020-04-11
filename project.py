@@ -1,13 +1,12 @@
 #Leitura do ficheiro, e transformação de dados em dicionários:
 #Tirar comentário de linhas de json
 import json
-
-#AnguloZenital
+import datetime
+import math
 
 EjetLatitude = 32.61
 EjetLongitude = -16.71
 DeclinacaoSol = {}
-#AnguloZenital = EjetLatitude;
 
 token = open("AG1.txt","r")
 anos = {}
@@ -38,12 +37,20 @@ del anos['Year'][0]
 
 tokens_column = 1
 for y in linestoken:
-    meses['Months'].append(y.split()[tokens_column])
+    if (y.split()[tokens_column] != "mm"):
+        if (int(y.split()[tokens_column]) < 10):
+            meses['Months'].append(y.split()[tokens_column].zfill(2))
+        else:
+            meses['Months'].append(y.split()[tokens_column])
 del meses['Months'][0]
 
 tokens_column = 2
 for y in linestoken:
-    dias['Days'].append(y.split()[tokens_column])
+    if(y.split()[tokens_column] != "dd"):
+        if(int(y.split()[tokens_column]) < 10):
+            dias['Days'].append(y.split()[tokens_column].zfill(2))
+        else:
+            dias['Days'].append(y.split()[tokens_column])
 del dias['Days'][0]
 
 tokens_column = 3
@@ -86,10 +93,64 @@ for hour in list1:
     w.append(round(AnguloHorario,3))
 
 
-with open('AngulosHorarios','w') as jsonfile:
-    json.dump(w,jsonfile);
+fmt = "%Y.%m.%d"
+list2 = anos["Year"]
+list3 = meses['Months']
+list4 = dias['Days']
+ListOfNewDates = []
+NewCount = 0;
+for i in list4:
+    ListOfNewDates.append(list2[NewCount] + "." + list3[NewCount] + "." + list4[NewCount])
+    NewCount = NewCount + 1
+
+ListOfJulianDays = []
+CountDates = 0;
+for i in ListOfNewDates:
+    dt = datetime.datetime.strptime(ListOfNewDates[CountDates], fmt)
+    tt = dt.timetuple()
+    ListOfJulianDays.append(tt.tm_yday)
+    CountDates = CountDates + 1
+
+Sin_DeclinacaoSol = []
+CountDec1 = 0
+for i in ListOfJulianDays:
+    CalculoSinDecSol = -0.39779 * math.cos(0.98565 * (ListOfJulianDays[CountDec1]+10)+1.914*math.sin(0.98565 * (ListOfJulianDays[CountDec1]-2)))
+    Sin_DeclinacaoSol.append(CalculoSinDecSol)
+    CountDec1 = CountDec1 + 1
+
+AngulosDeclinaçãoSol = []
+CountAngulos = 0
+for i in Sin_DeclinacaoSol:
+    AngulosDeclinaçãoSol.append(math.asin(Sin_DeclinacaoSol[CountAngulos]))
+    CountAngulos = CountAngulos + 1
+
+CosAnguloZenital = []
+CountCosAngZen = 0
+for i in AngulosDeclinaçãoSol:
+    AnguloDeclinacaoSol = AngulosDeclinaçãoSol[CountCosAngZen]
+    NewAnguloHorario = w[CountCosAngZen]
+    CalculoCosAngZen = math.sin(EjetLatitude) * math.sin(AnguloDeclinacaoSol) + math.cos(EjetLatitude) * math.cos(AnguloDeclinacaoSol) * math.cos(NewAnguloHorario)
+    CosAnguloZenital.append(CalculoCosAngZen)
+    CountCosAngZen = CountCosAngZen + 1
+
+AnguloZenital = []
+CountAngZen = 0
+for i in CosAnguloZenital:
+    CalcAngZen = math.acos(AngulosDeclinaçãoSol[CountAngZen])
+    AnguloZenital.append(CalcAngZen)
+    CountAngZen = CountAngZen + 1
+
+
+
 # Caso seja necessário escrever nos ficheiros texto
 #
+with open('AnguloZenital','w') as jsonfile:
+    json.dump(AnguloZenital,jsonfile)
+
+#with open('SinDecliSol','w') as jsonfile:
+#    json.dump(Sin_DeclinacaoSol,jsonfile)
+#with open('AngulosHorarios','w') as jsonfile:
+#    json.dump(w,jsonfile)
 #with open('years.txt','w') as jsonfile:
 #    json.dump(anos,jsonfile);
 #with open('months.txt', 'w') as jsonfile:

@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ad27c339-61a0-4b17-a5b5-7d59d632cd26" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/projetoHoudini.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/projetoHoudini.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AngulosHorarios" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project.py" beforeDir="false" afterPath="$PROJECT_DIR$/project.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,6 +32,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/project.py" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager">
     <configuration name="project" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
@@ -38,7 +42,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\Users\alexa\Desktop\projetoHoudini\venv\Scripts\python.exe" />
+      <option name="SDK_HOME" value="C:\Users\alexa\PycharmProjects\Labs\Lab01&amp;Lab02\venv\Scripts\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -67,38 +71,38 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="198" y="11" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585862304837">
+    <state x="198" y="11" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586624713728">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="198" y="11" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1585862304837" />
+    <state x="198" y="11" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1586624713728" />
     <state x="447" y="167" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1585861925804">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="447" y="167" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1585861925804" />
-    <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586350458546">
+    <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586631740286">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1586350458546" />
-    <state x="524" y="111" key="FileChooserDialogImpl" timestamp="1585862303702">
+    <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1586631740286" />
+    <state x="524" y="111" key="FileChooserDialogImpl" timestamp="1586624701030">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="524" y="111" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1585862303702" />
-    <state width="1345" height="179" key="GridCell.Tab.0.bottom" timestamp="1586353513565">
+    <state x="524" y="111" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1586624701030" />
+    <state width="1345" height="179" key="GridCell.Tab.0.bottom" timestamp="1586631646885">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1586353513565" />
-    <state width="1345" height="179" key="GridCell.Tab.0.center" timestamp="1586353513565">
+    <state width="1345" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1586631646885" />
+    <state width="1345" height="179" key="GridCell.Tab.0.center" timestamp="1586631646885">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1586353513565" />
-    <state width="1345" height="179" key="GridCell.Tab.0.left" timestamp="1586353513565">
+    <state width="1345" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1586631646885" />
+    <state width="1345" height="179" key="GridCell.Tab.0.left" timestamp="1586631646885">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1586353513565" />
-    <state width="1345" height="179" key="GridCell.Tab.0.right" timestamp="1586353513565">
+    <state width="1345" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1586631646885" />
+    <state width="1345" height="179" key="GridCell.Tab.0.right" timestamp="1586631646885">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1586353513565" />
+    <state width="1345" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1586631646885" />
     <state width="1345" height="223" key="GridCell.Tab.1.bottom" timestamp="1585873833252">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -115,9 +119,17 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1345" height="223" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1585873833252" />
+    <state x="184" y="6" key="SettingsEditor" timestamp="1586626022270">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="184" y="6" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1586626022270" />
     <state x="379" y="188" key="com.intellij.ide.util.TipDialog" timestamp="1586275308493">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="379" y="188" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1586275308493" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1586630917643">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1586630917643" />
   </component>
 </project>
