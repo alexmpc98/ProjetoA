@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ad27c339-61a0-4b17-a5b5-7d59d632cd26" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/projetoHoudini.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/projetoHoudini.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AngulosHorarios" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project.py" beforeDir="false" afterPath="$PROJECT_DIR$/project.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -79,30 +76,30 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="447" y="167" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1585861925804" />
-    <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586631740286">
+    <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586631857650">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1586631740286" />
+    <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1586631857650" />
     <state x="524" y="111" key="FileChooserDialogImpl" timestamp="1586624701030">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="524" y="111" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1586624701030" />
-    <state width="1345" height="179" key="GridCell.Tab.0.bottom" timestamp="1586631646885">
+    <state width="1345" height="179" key="GridCell.Tab.0.bottom" timestamp="1586631863794">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1586631646885" />
-    <state width="1345" height="179" key="GridCell.Tab.0.center" timestamp="1586631646885">
+    <state width="1345" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1586631863794" />
+    <state width="1345" height="179" key="GridCell.Tab.0.center" timestamp="1586631863794">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1586631646885" />
-    <state width="1345" height="179" key="GridCell.Tab.0.left" timestamp="1586631646885">
+    <state width="1345" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1586631863794" />
+    <state width="1345" height="179" key="GridCell.Tab.0.left" timestamp="1586631863794">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1586631646885" />
-    <state width="1345" height="179" key="GridCell.Tab.0.right" timestamp="1586631646885">
+    <state width="1345" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1586631863794" />
+    <state width="1345" height="179" key="GridCell.Tab.0.right" timestamp="1586631863794">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1586631646885" />
+    <state width="1345" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1586631863794" />
     <state width="1345" height="223" key="GridCell.Tab.1.bottom" timestamp="1585873833252">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

@@ -118,16 +118,16 @@ for i in ListOfJulianDays:
     Sin_DeclinacaoSol.append(CalculoSinDecSol)
     CountDec1 = CountDec1 + 1
 
-AngulosDeclinaçãoSol = []
+AngulosDeclinacaoSol = []
 CountAngulos = 0
 for i in Sin_DeclinacaoSol:
-    AngulosDeclinaçãoSol.append(math.asin(Sin_DeclinacaoSol[CountAngulos]))
+    AngulosDeclinacaoSol.append(math.asin(Sin_DeclinacaoSol[CountAngulos]))
     CountAngulos = CountAngulos + 1
 
 CosAnguloZenital = []
 CountCosAngZen = 0
-for i in AngulosDeclinaçãoSol:
-    AnguloDeclinacaoSol = AngulosDeclinaçãoSol[CountCosAngZen]
+for i in AngulosDeclinacaoSol:
+    AnguloDeclinacaoSol = AngulosDeclinacaoSol[CountCosAngZen]
     NewAnguloHorario = w[CountCosAngZen]
     CalculoCosAngZen = math.sin(EjetLatitude) * math.sin(AnguloDeclinacaoSol) + math.cos(EjetLatitude) * math.cos(AnguloDeclinacaoSol) * math.cos(NewAnguloHorario)
     CosAnguloZenital.append(CalculoCosAngZen)
@@ -136,17 +136,16 @@ for i in AngulosDeclinaçãoSol:
 AnguloZenital = []
 CountAngZen = 0
 for i in CosAnguloZenital:
-    CalcAngZen = math.acos(AngulosDeclinaçãoSol[CountAngZen])
+    CalcAngZen = math.acos(AngulosDeclinacaoSol[CountAngZen])
     AnguloZenital.append(CalcAngZen)
     CountAngZen = CountAngZen + 1
 
 
 
 # Caso seja necessário escrever nos ficheiros texto
-#
-with open('AnguloZenital','w') as jsonfile:
-    json.dump(AnguloZenital,jsonfile)
 
+#with open('AnguloZenital','w') as jsonfile:
+#    json.dump(AnguloZenital,jsonfile)
 #with open('SinDecliSol','w') as jsonfile:
 #    json.dump(Sin_DeclinacaoSol,jsonfile)
 #with open('AngulosHorarios','w') as jsonfile:
