@@ -136,7 +136,7 @@ for i in AngulosDeclinacaoSol:
 AnguloZenital = []
 CountAngZen = 0
 for i in CosAnguloZenital:
-    CalcAngZen = math.acos(AngulosDeclinacaoSol[CountAngZen])
+    CalcAngZen = math.acos(CosAnguloZenital[CountAngZen])
     AnguloZenital.append(CalcAngZen)
     CountAngZen = CountAngZen + 1
 
@@ -144,8 +144,8 @@ for i in CosAnguloZenital:
 
 # Caso seja necessário escrever nos ficheiros texto
 
-#with open('AnguloZenital','w') as jsonfile:
-#    json.dump(AnguloZenital,jsonfile)
+with open('AnguloZenital','w') as jsonfile:
+    json.dump(AnguloZenital,jsonfile)
 #with open('SinDecliSol','w') as jsonfile:
 #    json.dump(Sin_DeclinacaoSol,jsonfile)
 #with open('AngulosHorarios','w') as jsonfile:
