@@ -30,13 +30,6 @@ u10['U10'] = []
 v10 = {}
 v10['V10'] = []
 
-
-list1 = hours["Hours"]
-list2 = anos["Year"]
-list3 = meses['Months']
-list4 = dias['Days']
-listT2 = t2["T2"]
-
 w = []
 Horas = []
 Meses = []
@@ -113,6 +106,12 @@ for y in linestoken:
     v10['V10'].append(y.split()[tokens_column])
 del v10['V10'][0]
 token.close()
+
+list1 = hours["Hours"]
+list2 = anos["Year"]
+list3 = meses['Months']
+list4 = dias['Days']
+listT2 = t2["T2"]
 
 for hour in list1:
     AnguloHorario = (int(hour) - 12) * (360/24) + EjetLongitude
