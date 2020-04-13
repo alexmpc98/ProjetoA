@@ -155,7 +155,7 @@ for i in CosAnguloZenital:
     CountAngZen = CountAngZen + 1
 
 for temp in listT2:
-    temperatura_celcius.append(int(temp) - 273.15)      ###converter as temperaturas a celcius
+    temperatura_celcius.append(float(temp) - 273.15)      ###converter as temperaturas a celcius
     temperatura_corrigida.append(np.where(temperatura_celcius[countTemp] == -1272.15, 0, temperatura_celcius))     ###substituir os -1272.12(=-999-273.15) por zero
     countTemp = countTemp + 1
 
