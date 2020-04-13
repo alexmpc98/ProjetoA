@@ -3,6 +3,8 @@
 import json
 import datetime
 import math
+import numpy as np
+import matplotlib.pyplot as plt
 
 EjetLatitude = 32.61
 EjetLongitude = -16.71
@@ -27,6 +29,34 @@ u10 = {}
 u10['U10'] = []
 v10 = {}
 v10['V10'] = []
+
+
+list1 = hours["Hours"]
+list2 = anos["Year"]
+list3 = meses['Months']
+list4 = dias['Days']
+listT2 = t2["T2"]
+
+w = []
+Horas = []
+Meses = []
+fmt = "%Y.%m.%d"
+ListOfNewDates = []
+NewCount = 0;
+ListOfJulianDays = []
+CountDates = 0;
+Sin_DeclinacaoSol = []
+CountDec1 = 0
+AngulosDeclinacaoSol = []
+CountAngulos = 0
+CosAnguloZenital = []
+CountCosAngZen = 0
+AnguloZenital = []
+CountAngZen = 0
+temperatura_celcius = []
+temperatura_corrigida = []
+countTemp = 0
+
 
 linestoken = token.readlines()
 tokens_column = 0
@@ -84,48 +114,35 @@ for y in linestoken:
 del v10['V10'][0]
 token.close()
 
-w = []
-list1 = hours["Hours"]
-
-
 for hour in list1:
     AnguloHorario = (int(hour) - 12) * (360/24) + EjetLongitude
     w.append(round(AnguloHorario,3))
 
+for hour in list1:
+    Horas.append(int(hour))
 
-fmt = "%Y.%m.%d"
-list2 = anos["Year"]
-list3 = meses['Months']
-list4 = dias['Days']
-ListOfNewDates = []
-NewCount = 0;
+for meses in list3:
+    Meses.append(int(meses))
+
 for i in list4:
     ListOfNewDates.append(list2[NewCount] + "." + list3[NewCount] + "." + list4[NewCount])
     NewCount = NewCount + 1
 
-ListOfJulianDays = []
-CountDates = 0;
 for i in ListOfNewDates:
     dt = datetime.datetime.strptime(ListOfNewDates[CountDates], fmt)
     tt = dt.timetuple()
     ListOfJulianDays.append(tt.tm_yday)
     CountDates = CountDates + 1
 
-Sin_DeclinacaoSol = []
-CountDec1 = 0
 for i in ListOfJulianDays:
     CalculoSinDecSol = -0.39779 * math.cos(0.98565 * (ListOfJulianDays[CountDec1]+10)+1.914*math.sin(0.98565 * (ListOfJulianDays[CountDec1]-2)))
     Sin_DeclinacaoSol.append(CalculoSinDecSol)
     CountDec1 = CountDec1 + 1
 
-AngulosDeclinacaoSol = []
-CountAngulos = 0
 for i in Sin_DeclinacaoSol:
     AngulosDeclinacaoSol.append(math.asin(Sin_DeclinacaoSol[CountAngulos]))
     CountAngulos = CountAngulos + 1
 
-CosAnguloZenital = []
-CountCosAngZen = 0
 for i in AngulosDeclinacaoSol:
     AnguloDeclinacaoSol = AngulosDeclinacaoSol[CountCosAngZen]
     NewAnguloHorario = w[CountCosAngZen]
@@ -133,13 +150,28 @@ for i in AngulosDeclinacaoSol:
     CosAnguloZenital.append(CalculoCosAngZen)
     CountCosAngZen = CountCosAngZen + 1
 
-AnguloZenital = []
-CountAngZen = 0
 for i in CosAnguloZenital:
     CalcAngZen = math.acos(CosAnguloZenital[CountAngZen])
     AnguloZenital.append(CalcAngZen)
     CountAngZen = CountAngZen + 1
 
+for temp in listT2:
+    temperatura_celcius.append(int(temp) - 273.15)      ###converter as temperaturas a celcius
+    temperatura_corrigida.append(np.where(temperatura_celcius[countTemp] == -1272.15, 0, temperatura_celcius))     ###substituir os -1272.12(=-999-273.15) por zero
+    countTemp = countTemp + 1
+
+th = []
+for h in range(24):
+    indexs = np.argwhere((Meses == 7) & (Horas == h))         ###cria uma lista (th) com media das temperaturas hora a hora nos meses 7
+    th.append(np.mean(temperatura_corrigida[indexs]))
+
+
+xvalores = range(24)      ###constroi o gráfico
+yvalores = th
+plt.plot(xvalores, yvalores, '-o')
+plt.xlabel("hora do dia")
+plt.ylabel("temperatura media em Celcius")
+plt.show()
 
 
 # Caso seja necessário escrever nos ficheiros texto
