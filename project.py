@@ -1,204 +1,87 @@
-#Leitura do ficheiro, e transformação de dados em dicionários:
-#Tirar comentário de linhas de json
-import json
-import datetime
-import math
 import numpy as np
 import matplotlib.pyplot as plt
+import datetime
+from scipy.interpolate import interp1d 
 
 EjetLatitude = 32.61
 EjetLongitude = -16.71
 DeclinacaoSol = {}
 
-token = open("AG1.txt","r")
-anos = {}
-anos['Year'] = []
-meses = {}
-meses['Months'] = []
-dias = {}
-dias['Days'] = []
-hours = {}
-hours['Hours'] = []
-t2 = {}
-t2['T2'] = []
-swdown = {}
-swdown['SWDOWN'] = []
-lwdown = {}
-lwdown['LWDOWN'] = []
-u10 = {}
-u10['U10'] = []
-v10 = {}
-v10['V10'] = []
+#ALINEA A
 
-w = []
-Horas = []
-Meses = []
-fmt = "%Y.%m.%d"
-ListOfNewDates = []
-NewCount = 0;
-ListOfJulianDays = []
-CountDates = 0;
-Sin_DeclinacaoSol = []
-CountDec1 = 0
-AngulosDeclinacaoSol = []
-CountAngulos = 0
-CosAnguloZenital = []
-CountCosAngZen = 0
-AnguloZenital = []
-CountAngZen = 0
-temperatura_celcius = []
-temperatura_corrigida = []
-countTemp = 0
+dados = np.loadtxt("AG1.txt", skiprows=1)
+ano = dados[:,0].astype(int)
+mes = dados[:,1].astype(int)
+dia = dados[:,2].astype(int)
+hora = dados[:,3].astype(int)
+t2 = dados[:,4] #temperatura do ar
+swdown = dados[:,5] #radiação solar descrescente
+lwdown = dados[:,6] #radiação atmosférica decrescente
+u10 = dados[:,7] #vento de componente u
+v10 = dados[:,8] #vento de componente v
+
+#ALINEA B
+
+datas = []
+for h in range(len(ano)):
+    datas.append(datetime.datetime(ano[h], mes[h], dia[h], hora[h]))
+
+datas_A= np.array(datas)
 
 
-linestoken = token.readlines()
-tokens_column = 0
+w = (hora - 12) * (360/24) + EjetLongitude
 
-for x in linestoken:
-    anos['Year'].append(x.split()[tokens_column])
-del anos['Year'][0]
+julians = np.zeros(ano.shape)
+for h in range(len(julians)):
+    ano0 = datas[h].year
+    julians[h] = datas[h].toordinal()-datetime.datetime(ano0-1, 12, 31).toordinal()
 
-tokens_column = 1
-for y in linestoken:
-    if (y.split()[tokens_column] != "mm"):
-        if (int(y.split()[tokens_column]) < 10):
-            meses['Months'].append(y.split()[tokens_column].zfill(2))
-        else:
-            meses['Months'].append(y.split()[tokens_column])
-del meses['Months'][0]
+CalculoSinDecSol = -0.39779 * np.cos(0.98565 * (julians[h]+10)+1.914*np.sin(0.98565 * (julians[h]-2)))
 
-tokens_column = 2
-for y in linestoken:
-    if(y.split()[tokens_column] != "dd"):
-        if(int(y.split()[tokens_column]) < 10):
-            dias['Days'].append(y.split()[tokens_column].zfill(2))
-        else:
-            dias['Days'].append(y.split()[tokens_column])
-del dias['Days'][0]
+AngulosDeclinacaoSol=np.arcsin(CalculoSinDecSol)
 
-tokens_column = 3
-for y in linestoken:
-    hours['Hours'].append(y.split()[tokens_column])
-del hours['Hours'][0]
+CalculoCosAngZen = np.sin(EjetLatitude) * np.sin(AngulosDeclinacaoSol) + np.cos(EjetLatitude) * np.cos(AngulosDeclinacaoSol) * np.cos(w)
 
-tokens_column = 4
-for y in linestoken:
-    t2['T2'].append(y.split()[tokens_column])
-del t2['T2'][0]
+CalcAngZen = np.arccos(CalculoCosAngZen)
 
-tokens_column = 5
-for y in linestoken:
-    swdown['SWDOWN'].append(y.split()[tokens_column])
-del swdown['SWDOWN'][0]
 
-tokens_column = 6
-for y in linestoken:
-    lwdown['LWDOWN'].append(y.split()[tokens_column])
-del lwdown['LWDOWN'][0]
 
-tokens_column = 7
-for y in linestoken:
-    u10['U10'].append(y.split()[tokens_column])
-del u10['U10'][0]
+#ALINEA C
 
-tokens_column = 8
-for y in linestoken:
-    v10['V10'].append(y.split()[tokens_column])
-del v10['V10'][0]
-token.close()
+def interpl(y0):
+    y = np.copy(y0)
+    x = np.arange(len(t2)) 
+    x1 = x[np.where(y != -999)]
+    y1 = y[np.where(y != -999)]
+    f = interp1d(x1, y1, kind = "linear", fill_value = "extrapolate")
+    x1 = np.where(y == -999)
+    return y
 
-list1 = hours["Hours"]
-list2 = anos["Year"]
-list3 = meses['Months']
-list4 = dias['Days']
-listT2 = t2["T2"]
+t2_interp = interpl(t2)
+swdown_interp = interpl(swdown)
+u10_interp = interpl(u10)
+v10_interp = interpl(v10)
 
-for hour in list1:
-    AnguloHorario = (int(hour) - 12) * (360/24) + EjetLongitude
-    w.append(round(AnguloHorario,3))
 
-for hour in list1:
-    Horas.append(int(hour))
 
-for meses in list3:
-    Meses.append(int(meses))
+#ALINEA D
 
-for i in list4:
-    ListOfNewDates.append(list2[NewCount] + "." + list3[NewCount] + "." + list4[NewCount])
-    NewCount = NewCount + 1
+temperatura_celcius = t2 - 273.15                                                    ###converter as temperaturas a celcius
+temperatura_corrigida = np.where(temperatura_celcius == -1272.15, 0, temperatura_celcius)     ###substituir os -1272.12(=-999-273.15) por zero
 
-for i in ListOfNewDates:
-    dt = datetime.datetime.strptime(ListOfNewDates[CountDates], fmt)
-    tt = dt.timetuple()
-    ListOfJulianDays.append(tt.tm_yday)
-    CountDates = CountDates + 1
-
-for i in ListOfJulianDays:
-    CalculoSinDecSol = -0.39779 * math.cos(0.98565 * (ListOfJulianDays[CountDec1]+10)+1.914*math.sin(0.98565 * (ListOfJulianDays[CountDec1]-2)))
-    Sin_DeclinacaoSol.append(CalculoSinDecSol)
-    CountDec1 = CountDec1 + 1
-
-for i in Sin_DeclinacaoSol:
-    AngulosDeclinacaoSol.append(math.asin(Sin_DeclinacaoSol[CountAngulos]))
-    CountAngulos = CountAngulos + 1
-
-for i in AngulosDeclinacaoSol:
-    AnguloDeclinacaoSol = AngulosDeclinacaoSol[CountCosAngZen]
-    NewAnguloHorario = w[CountCosAngZen]
-    CalculoCosAngZen = math.sin(EjetLatitude) * math.sin(AnguloDeclinacaoSol) + math.cos(EjetLatitude) * math.cos(AnguloDeclinacaoSol) * math.cos(NewAnguloHorario)
-    CosAnguloZenital.append(CalculoCosAngZen)
-    CountCosAngZen = CountCosAngZen + 1
-
-for i in CosAnguloZenital:
-    CalcAngZen = math.acos(CosAnguloZenital[CountAngZen])
-    AnguloZenital.append(CalcAngZen)
-    CountAngZen = CountAngZen + 1
-
-for temp in listT2:
-    temperatura_celcius.append(float(temp) - 273.15)      ###converter as temperaturas a celcius
-    temperatura_corrigida.append(np.where(temperatura_celcius[countTemp] == -1272.15, 0, temperatura_celcius))     ###substituir os -1272.12(=-999-273.15) por zero
-    countTemp = countTemp + 1
 
 th = []
 for h in range(24):
-    indexs = np.argwhere((Meses == 7) & (Horas == h))         ###cria uma lista (th) com media das temperaturas hora a hora nos meses 7
+    indexs = np.argwhere((mes == 7) & (hora == h))         ###cria uma lista (th) com media das temperaturas hora a hora nos meses 7
     th.append(np.mean(temperatura_corrigida[indexs]))
 
 
-xvalores = range(24)      ###constroi o gráfico
+xvalores = range(24)                                       ###constroi o gráfico
 yvalores = th
 plt.plot(xvalores, yvalores, '-o')
 plt.xlabel("hora do dia")
 plt.ylabel("temperatura media em Celcius")
 plt.show()
-
-
-# Caso seja necessário escrever nos ficheiros texto
-
-with open('AnguloZenital','w') as jsonfile:
-    json.dump(AnguloZenital,jsonfile)
-#with open('SinDecliSol','w') as jsonfile:
-#    json.dump(Sin_DeclinacaoSol,jsonfile)
-#with open('AngulosHorarios','w') as jsonfile:
-#    json.dump(w,jsonfile)
-#with open('years.txt','w') as jsonfile:
-#    json.dump(anos,jsonfile);
-#with open('months.txt', 'w') as jsonfile:
-#    json.dump(meses, jsonfile);
-#with open('days.txt', 'w') as jsonfile:
-#    json.dump(dias, jsonfile);
-#with open('hours.txt', 'w') as jsonfile:
-#    json.dump(hours, jsonfile);
-#with open('t2.txt', 'w') as jsonfile:
-#    json.dump(t2, jsonfile);
-#with open('swdown.txt', 'w') as jsonfile:
-#    json.dump(swdown, jsonfile);
-#with open('lwdown.txt', 'w') as jsonfile:
-#    json.dump(lwdown, jsonfile);
-#with open('u10.txt', 'w') as jsonfile:
-#    json.dump(u10, jsonfile);
-#with open('v10.txt', 'w') as jsonfile:
-#    json.dump(v10, jsonfile);
 
 
 
