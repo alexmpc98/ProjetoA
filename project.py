@@ -72,7 +72,7 @@ temperatura_corrigida = np.where(temperatura_celcius == -1272.15, 0, temperatura
 
 th = []
 for h in range(24):
-    indexs = np.argwhere((mes == 7) & (hora == h))         ###cria uma lista (th) com media das temperaturas hora a hora nos meses 7
+    indexs = np.argwhere((mes == 1) & (hora == h))         ###cria uma lista (th) com media das temperaturas hora a hora nos meses 7
     th.append(np.mean(temperatura_corrigida[indexs]))
 
 
