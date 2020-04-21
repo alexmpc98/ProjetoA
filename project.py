@@ -29,21 +29,24 @@ for h in range(len(ano)):
 datas_A= np.array(datas)
 
 
-w = (hora - 12) * (360/24) + EjetLongitude
 
-julians = np.zeros(ano.shape)
-for h in range(len(julians)):
-    ano0 = datas[h].year
-    julians[h] = datas[h].toordinal()-datetime.datetime(ano0-1, 12, 31).toordinal()
+def diajuliano(ano,mes,dia):
+    julians = np.zeros(ano.shape,dtype=int)
+    for h in range(len(julians)):
+        ano0 = datas[h].year
+        julians[h] = datas[h].toordinal()-datetime.datetime(ano0-1, 12, 31).toordinal()
+    
+    return julians[h]
 
-CalculoSinDecSol = -0.39779 * np.cos(0.98565 * (julians[h]+10)+1.914*np.sin(0.98565 * (julians[h]-2)))
 
-AngulosDeclinacaoSol=np.arcsin(CalculoSinDecSol)
-
-CalculoCosAngZen = np.sin(EjetLatitude) * np.sin(AngulosDeclinacaoSol) + np.cos(EjetLatitude) * np.cos(AngulosDeclinacaoSol) * np.cos(w)
-
-CalcAngZen = np.arccos(CalculoCosAngZen)
-
+def zenital(n,hora):
+    n = diajuliano(ano,mes,dia)
+    CalculoSinDecSol = -0.39779 * np.cos(0.98565*np.pi/180 * (n+10)+1.914*np.sin(0.98565*np.pi/180 * (n-2)))
+    AngulosDeclinacaoSol=np.arcsin(CalculoSinDecSol)
+    w = (hora - 12) * (360/24) + EjetLongitude
+    CalculoCosAngZen = np.sin(EjetLatitude*np.pi/180) * np.sin(AngulosDeclinacaoSol) + np.cos(EjetLatitude*np.pi/180) * np.cos(AngulosDeclinacaoSol) * np.cos(w*np.pi/180)
+    CalcAngZen = np.arccos(CalculoCosAngZen)
+    return(CalcAngZen*180/np.pi)
 
 
 #ALINEA C
