@@ -5,7 +5,6 @@ from scipy.interpolate import interp1d
 
 EjetLatitude = 32.61
 EjetLongitude = -16.71
-DeclinacaoSol = {}
 
 #ALINEA A
 
@@ -22,24 +21,14 @@ v10 = dados[:,8] #vento de componente v
 
 #ALINEA B
 
-datas = []
-for h in range(len(ano)):
-    datas.append(datetime.datetime(ano[h], mes[h], dia[h], hora[h]))
-
-datas_A= np.array(datas)
-
-
-
 def diajuliano(ano,mes,dia):
-    julians = np.zeros(ano.shape,dtype=int)
-    for h in range(len(julians)):
-        ano0 = datas[h].year
-        julians[h] = datas[h].toordinal()-datetime.datetime(ano0-1, 12, 31).toordinal()
-    
-    return julians
+    dia_juliano=datetime.datetime(ano,mes,dia)
+    dia_j=dia_juliano.timetuple()
+    return dia_j.tm_yday
 
 
-def zenital(n,hora):
+
+def zenital(ano,mes,dia,hora):  
     n = diajuliano(ano,mes,dia)
     CalculoSinDecSol = -0.39779 * np.cos(0.98565*np.pi/180 * (n+10)+1.914*np.sin(0.98565*np.pi/180 * (n-2)))
     AngulosDeclinacaoSol=np.arcsin(CalculoSinDecSol)
@@ -81,10 +70,10 @@ for h in range(24):
     t.append(np.mean(temperatura_corrigida[indexs]))
         
 
-xvalores = range(24)                                       
-yvalores = t
+x = range(24)                                       
+y = t
 fig , ax= plt.subplots()
-plt.plot(xvalores, yvalores, '-o')
+plt.plot(x, y, '-o')
 ax.set_xlabel("hora do dia")
 ax.set_ylabel("temperatura media em Celcius")
 
@@ -119,20 +108,42 @@ plt.scatter(por_do_sol, round(ps,2), color = "green", marker = "x", s = 500)
 
 rs_media=[]
 for h in range(24):
-    hrs=np.argwhere((mes==1) & (hora==h))
-    rs_media.append(np.mean(swdown_interp[hrs])) 
+    rs_h=np.argwhere((mes==1) & (hora==h))
+    rs_media.append(np.mean(swdown_interp[rs_h])) 
 
 ax1= ax.twinx()
 ax1.set_ylabel('Radiação solar')
 ax1.plot(rs_media, color='purple')
 fig.tight_layout()
 
+#ALINEA G
+
+ang_zen_hora=[]
+for h in range(24):
+    for a in range(1979,2019):
+        for d in range(1,32):
+            ang_zen_hora.append([zenital(a,1,d,h)])
+            
+            
+total_de_dias = 31*40                    #31*40 pois existem 31 dias por cada ano, logo 40 anos * 31 dias    
+ang_zen_medio=[]
+for i in range(0,len(ang_zen_hora),total_de_dias):                      
+    ang_zen_medio.append([np.mean(ang_zen_hora[i:i+total_de_dias]),])
+    
+t_atm=[]
+for h in range(24):
+    t_atm_h = np.squeeze(np.argwhere((mes == 1) & (hora == h)))
+    if rs_media[h]/(0.7*1366.0*np.cos(np.radians(ang_zen_medio[h]))) > 0:
+        t_atm.append(rs_media[h]/(0.7*1366.0*np.cos(np.radians(ang_zen_medio[h]))))   #uso np.radians pois se fizer a regra de 3 simples (ang_zen_medio[h]*np.pi/180) obtenho um erro que diz me que não posso multiplicar uma sequencia por um nº float            
+   
 
 
-
-
-
-
-
+x = range(int(round(nascer_do_sol)), int(round(por_do_sol))+1)                                   
+y = t_atm
+fig , ax= plt.subplots()
+plt.plot(x, y, '-o')
+ax.set_xlabel(" horas do ciclo diurno ")
+ax.set_ylabel(" transmissividade atmosférica ")
+plt.show()
 
 
