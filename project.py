@@ -51,6 +51,7 @@ def interpl(y0):
     return y
 
 t2_interp = interpl(t2)
+lwdown_interp = interpl(lwdown)
 swdown_interp = interpl(swdown)
 u10_interp = interpl(u10)
 v10_interp = interpl(v10)
@@ -153,15 +154,102 @@ plt.show()
 
 #ALINEA H
 
-def TemperaturaEquilibrio(T):
-    f = 500 - 5.67e-8*T**4-0.4(T-273)
-    return f
+Ts = 0
+beta = 0.12*abs(v10_interp) 
 
-def y(T,Tar,Es,Eatm):
-    e = Eatm + (1-0.3) + Es - 5.67e-8*T**4-(0.12*v10_interp)*(T-Tar)
-    return e
+E_atmosferico = []
+u_vento = []
+v_vento = []
+for h in range(24):
+    indx = np.argwhere((mes==1)&(hora==h))
+    E_atmosferico.append(np.mean(lwdown_interp[indx]))
+    u_vento.append(np.mean(u10_interp[indx]))
+    v_vento.append(np.mean(v10_interp[indx]))
+    
+
+lista_vento = []
+for i in range(24):
+    velocidade = np.sqrt((u_vento[i])**2 + (v_vento[i])**2)
+    lista_vento.append(velocidade)
+    
+
+lista_beta = []
+for e in range(24):
+    beta = 0.12*lista_vento[e]
+    lista_beta.append(beta)
+    
+
+
+def f(Ts, t2_interp, swdown_interp, lwdown_interp, beta):
+    fx = lwdown_interp + (1 - 0.3)*swdown_interp - 5.67e-8*Ts**4 - beta*(Ts-t2_interp)
+    return fx
+
+
+
+def fderivado(Ts, beta):
+    fxderivado = -4*5.67e-8*Ts**3 - beta
+    return fxderivado
+
+
+
+def newton(f, fderivado, x0, epsilon, swdown_interp, t2_interp, t_atm, maxiter = 24 ):
+    x_0 = x0
+    l_n = [h, x_0]
+    x_1 = x0
+    k = 0
+    error = 2*epsilon
+    while k <= maxiter and error > epsilon:
+        x_1 = x0 - f(x0, t2_interp[k], swdown_interp[k], lwdown_interp[k], beta) / fderivado(x0, beta)
+        error = abs(x0 - x_1)
+        x0 = x_1
+        k = k+1
+        l_n.append(np.float(x_1))
+    return x_1, k, l_n
 
 
 
 
+lista_raizes = []
+lista_iter = []
+for h in range(24):
+    raiz, iteracao, l_n = newton(f, fderivado, 270, 0.1, swdown_interp, t2_interp, t_atm, maxiter = 24 )
+    lista_iter.append(l_n)
+    lista_raizes.append("%.4f" % raiz)
+    
+    
+B = np.zeros((24,24))
+for k in range(24):
+    for j in range(len(lista_iter)):
+        B[k,j] = lista_iter[k][j]
+ 
+    
+#ALINEA I
+       
+t1_1 = []
+t1_0 = []
+
+for v in range(24):
+    t1 = (((E_atmosferico[v] + (1-0.3)*rs_media[v])/5.67e-8)**0.25)
+    t0 = (((5.67e-8*t1**4)+((1-0.3)*rs_media[v]))/5.67e-8)**0.25
+    t1_1.append(t1)
+    t1_0.append(t0)
+    
+            
+    
+        
+    
+    
+    
+        
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
