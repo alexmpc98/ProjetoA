@@ -60,7 +60,7 @@ v10_interp = interpl(v10)
 #ALINEA D
  
 
-temperatura_celcius = t2 - 273.15                                                    #converter temperaturas para celcius
+temperatura_celcius = t2_interp - 273.15                                                    #converter temperaturas para celcius
 temperatura_corrigida = np.where(temperatura_celcius == -1272.15, 0, temperatura_celcius)     #substituir os -1272.12(=-999-273.15) por zero
 
 
@@ -111,10 +111,12 @@ for h in range(24):
     rs_h=np.argwhere((mes==1) & (hora==h))
     rs_media.append(np.mean(swdown_interp[rs_h])) 
 
+
 ax1= ax.twinx()
 ax1.set_ylabel('Radiação solar')
 ax1.plot(rs_media, color='purple')
 fig.tight_layout()
+
 
 #ALINEA G
 
@@ -145,5 +147,21 @@ plt.plot(x, y, '-o')
 ax.set_xlabel(" horas do ciclo diurno ")
 ax.set_ylabel(" transmissividade atmosférica ")
 plt.show()
+
+
+
+
+#ALINEA H
+
+def TemperaturaEquilibrio(T):
+    f = 500 - 5.67e-8*T**4-0.4(T-273)
+    return f
+
+def y(T,Tar,Es,Eatm):
+    e = Eatm + (1-0.3) + Es - 5.67e-8*T**4-(0.12*v10_interp)*(T-Tar)
+    return e
+
+
+
 
 
